@@ -3,6 +3,7 @@ const {
   getItem,
   addItem,
   deleteItem,
+  updateItem,
 } = require('../controllers/items');
 
 // Item Schema
@@ -66,6 +67,15 @@ const deleteItemOpts = {
   handler: deleteItem,
 };
 
+const updateItemOpts = {
+  schema: {
+    response: {
+      200: Item,
+    },
+  },
+  handler: updateItem,
+};
+
 function itemRoutes(fastify, options, done) {
   // Get all items
   fastify.get('/items', getItemsOpts);
@@ -78,6 +88,9 @@ function itemRoutes(fastify, options, done) {
 
   // Delete item
   fastify.delete('/items/:id', deleteItemOpts);
+
+  // Update item
+  fastify.put('/items/:id', updateItemOpts);
 
   done();
 }
